@@ -50,6 +50,7 @@ function deleteCheck(e) {
     const todo = item.parentElement;
     //animation
     todo.classList.add("fall");
+    removeLocalTodos(todo);
     todo.addEventListener("transitionend", function () {
       todo.remove();
     });
@@ -109,7 +110,6 @@ function clear() {
 //Get todos from local Storage
 
 function getTodos() {
-  console.log("hell0");
   let todos;
   if (localStorage.getItem("todos") === null) {
     todos = [];
@@ -142,4 +142,23 @@ function getTodos() {
     //Append to List
     todoList.appendChild(todoDiv);
   });
+}
+
+function removeLocalTodos(todo) {
+  //the todo is the div. Then I navigate down to the text. Then use indexOf to find the index of the todo. Then using splice remove the chosen element.
+
+  let todos;
+  if (localStorage.getItem("todos") === null) {
+    todos = [];
+  } else {
+    todos = JSON.parse(localStorage.getItem("todos"));
+  }
+
+  // const todoIndex = todo.children[0].innerText;
+  // todos.splice(todos.indexOf(todoIndex), 1);
+  // localStorage.setItem("todos", JSON.stringify(todos));
+
+  const todoText = todo.children[0].innerText;
+  todos.splice(todos.indexOf(todoText), 1);
+  localStorage.setItem("todos", JSON.stringify(todos));
 }
